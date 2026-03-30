@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luoyang Museum · Zhu Yan Mirror</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "SimSun", "宋体", serif;
+        }
+
+        /* 全局莫兰迪色系 */
+        :root {
+            --main-red: #c87a83;    /* 莫兰迪朱红 */
+            --bg-white: #f5f0ec;     /* 莫兰迪米白 */
+            --text-gray: #3a3a38;    /* 墨灰 */
+            --sub-blue: #b0b9c2;     /* 莫兰迪浅灰蓝 */
+            --sub-pink: #e6d5d2;     /* 莫兰迪藕粉 */
+            --line-color: #d9c5c1;   /* 分割线色 */
+            --scroll-bg: #f0e8e3;   /* 卷轴背景色 */
+            --border-color: #e0d2c8; /* 卡片边框色 */
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* -------- 主界面 -------- */
+        .header-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: url('hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            overflow: hidden;
+        }
+
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(245, 240, 236, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            z-index: 999;
+        }
+
+        /* Logo区域 */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background-color: var(--main-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-ch {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-gray);
+        }
+
+        .logo-en {
+            font-size: 12px;
+            color: var(--text-gray);
+            opacity: 0.7;
+        }
+
+        /* 导航菜单 */
+        .nav-links {
+            display: flex;
+            gap: 60px;
+        }
+
+        .nav a {
+            font-size: 18px;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--main-red);
+        }
+
+        .nav a.active {
+            color: var(--main-red);
+            font-weight: bold;
+        }
+
+        /* 右侧操作区 */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* 语言切换按钮样式 */
+        .lang-switch {
+            padding: 8px 16px;
+            border: 1px solid var(--line-color);
+            border-radius: 20px;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* 主界面文案 */
+        .hero-content {
+            text-align: left;
+            z-index: 2;
+        }
+
+        .hero-series {
+            font-size: 16px;
+            color: var(--main-red);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: 8vw;
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            max-width: 600px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .explore-btn {
+            padding: 12px 30px;
+            border: 1px solid var(--text-gray);
+            background-color: transparent;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .explore-btn:hover {
+            background-color: var(--text-gray);
+            color: white;
+        }
+
+        /* 通用板块 */
+        .section {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 60px;
+            color: var(--main-red);
+            margin-bottom: 40px;
+            font-weight: normal;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--line-color);
+        }
+
+        /* -------- 物板块 -------- */
+        .thing-container {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+            background-color: #ffffff;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+        .thing-img-box {
+            flex: 0 0 45%;
+        }
+
+        .thing-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--sub-pink);
+        }
+
+        .thing-content {
+            flex: 1;
+        }
+
+        .thing-desc {
+            font-size: 20px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        .params-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 40px;
+            margin-bottom: 40px;
+        }
+
+        .param-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .param-label {
+            font-size: 16px;
+            color: var(--main-red);
+            margin-bottom: 8px;
+        }
+
+        .param-value {
+            font-size: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--line-color);
+        }
+
+        /* 物板块：加入购物车区域（规范标价） */
+        .buy-action {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        /* 电商规范价格样式 */
+        .action-price, .buy-price {
+            font-size: 26px;
+            color: var(--main-red);
+            font-weight: bold;
+            line-height: 1;
+        }
+        /* 币种符号样式：稍小、上标，符合购物网站规范 */
+        .currency-symbol {
+            font-size: 18px;
+            vertical-align: top;
+            margin-right: 2px;
+        }
+
+        .cart-btn {
+            padding: 12px 30px;
+            background-color: var(--main-red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cart-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ====================== */
+        /* 韵板块·居中放大立体感轮播 */
+        /* ====================== */
+        .scroll-container {
+            position: relative;
+            width: 100%;
+            background-color: var(--scroll-bg);
+            border-radius: 20px;
+            padding: 60px 0;
+            overflow: hidden;
+        }
+
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 50%;
+            font-size: 22px;
+            color: var(--main-red);
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .scroll-btn:hover {
+            background-color: var(--main-red);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .btn-left { left: 30px; }
+        .btn-right { right: 30px; }
+
+        #scrollCards {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            padding: 20px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            padding-left: calc(50% - 160px);
+            padding-right: calc(50% - 160px);
+        }
+        #scrollCards::-webkit-scrollbar { display: none; }
+
+        .scroll-card {
+            flex: 0 0 320px;
+            height: 420px;
+            overflow: hidden;
+            position: relative;
+            margin: 0 10px;
+            border-radius: 12px;
+            transform: scale(0.85);
+            opacity: 0.7;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            cursor: pointer;
+        }
+        .scroll-card.active {
+            transform: scale(1);
+            opacity: 1;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+        .scroll-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .scroll-card:hover img {
+            transform: scale(1.05);
+        }
+        .card-label {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background-color: rgba(255,255,255,0.95);
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* ====================== */
+        /* 珍板块·按参考图设计 */
+        /* ====================== */
+        .treasure-container {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .treasure-card {
+            flex: 1;
+            min-width: 220px;
+            max-width: 280px;
+            padding: 30px 25px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 16px;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .treasure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .card-en {
+            font-size: 14px;
+            color: var(--main-red);
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .card-title {
+            font-size: 22px;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .card-desc {
+            font-size: 16px;
+            color: var(--text-gray);
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        /* -------- 本板块 -------- */
+        .origin-container {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+        }
+
+        .origin-img-box {
+            flex: 0 0 40%;
+        }
+
+        .origin-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--sub-pink);
+        }
+
+        .origin-content {
+            flex: 1;
+            font-size: 20px;
+            line-height: 2;
+        }
+
+        /* ====================== */
+        /* 【修改】脉板块·参考图时间轴样式 */
+        /* ====================== */
+        .vein-timeline {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            padding: 40px 0;
+        }
+
+        /* 时间轴竖线 */
+        .vein-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--line-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        /* 时间轴圆点 */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--main-red);
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            width: 50%;
+            padding: 0 60px;
+        }
+
+        /* 左右交替布局 */
+        .timeline-item:nth-child(odd) .timeline-content {
+            text-align: left;
+            padding-right: 80px;
+        }
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 50%;
+            text-align: right;
+            padding-left: 80px;
+        }
+
+        .timeline-subtitle {
+            font-size: 24px;
+            color: var(--main-red);
+            font-style: italic;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .timeline-title {
+            font-size: 32px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .timeline-desc {
+            font-size: 20px;
+            color: var(--text-gray);
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* ====================== */
+        /* 底部板块·参考图设计 */
+        /* ====================== */
+        .footer-section {
+            width: 100%;
+            background-color: var(--bg-white);
+            padding: 60px 40px 40px;
+            margin-top: 100px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .buy-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .buy-title {
+            font-size: 32px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .buy-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            opacity: 0.8;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .buy-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .buy-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .buy-info {
+            text-align: left;
+        }
+
+        .buy-name {
+            font-size: 20px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .buy-btn {
+            padding: 12px 30px;
+            background-color: var(--main-red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .buy-btn:hover {
+            opacity: 0.9;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            max-width: 250px;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .footer-desc {
+            font-size: 16px;
+            color: var(--text-gray);
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .thing-container, .origin-container {flex-direction: column;}
+            .params-grid {grid-template-columns: 1fr;}
+            .thing-img-box, .origin-img-box {flex: 0 0 100%;}
+            .treasure-card {flex: 1 1 45%;}
+            /* 时间轴响应式：改为单列 */
+            .vein-timeline::before {left: 20px;}
+            .timeline-item::before {left: 20px;}
+            .timeline-content {width: 100%; padding: 0 0 0 60px !important; text-align: left !important; margin-left: 0 !important;}
+        }
+
+        @media (max-width: 768px) {
+            .nav {padding: 15px 20px;}
+            .nav-links {gap: 20px;}
+            .treasure-card {flex: 1 1 100%;}
+            .footer-column {flex: 1 1 100%; margin-bottom: 30px;}
+            .scroll-card {
+                flex: 0 0 280px;
+                height: 380px;
+            }
+            #scrollCards {
+                padding-left: calc(50% - 140px);
+                padding-right: calc(50% - 140px);
+            }
+            .btn-left { left: 15px; }
+            .btn-right { right: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主界面 -->
+    <header class="header-container">
+        <nav class="nav">
+            <div class="logo-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }">
+                <div class="logo-circle">洛</div>
+                <div class="logo-text">
+                    <div class="logo-ch" id="logoCh">洛阳博物馆</div>
+                    <div class="logo-en" id="logoEn">LUOYANG MUSEUM</div>
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="#thing" class="active" id="navThing">物</a>
+                <a href="#charm" id="navCharm">韵</a>
+                <a href="#root" id="navRoot">本</a>
+                <a href="#vein" id="navVein">脉</a>
+                <a href="#treasure" id="navTreasure">珍</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="lang-switch" id="langBtn">中文</button>
+            </div>
+        </nav>
+
+        <div class="hero-content">
+            <div class="hero-series" id="heroSeries">洛阳博物馆 · 文创系列</div>
+            <h1 class="hero-title" id="heroTitle">朱颜镜</h1>
+            <p class="hero-desc" id="heroDesc">复刻大唐铜镜风华，藏尽洛阳千年韵致，一方朱颜，照见东方美学。</p>
+            <button class="explore-btn" id="exploreBtn">探索详情</button>
+        </div>
+    </header>
+
+    <!-- 物板块 -->
+    <div class="section" id="thing">
+        <h2 class="section-title" id="thingTitle">物</h2>
+        <div class="thing-container">
+            <div class="thing-img-box">
+                <img src="zhuyan-jing.jpg" alt="朱颜镜" class="thing-img">
+            </div>
+            <div class="thing-content">
+                <div class="thing-desc" id="thingDesc">朱颜镜采用高强度合金底座，经多道手工抛光工艺，呈现如玉温润质感。镜面采用高透光防雾玻璃，真实还原肌肤自然色泽，兼具实用与收藏价值。</div>
+                <div class="params-grid">
+                    <div class="param-item">
+                        <div class="param-label" id="paramName">品名</div>
+                        <div class="param-value">Zhu Yan Mirror</div>
+                    </div>
+                    <div class="param-item">
+                        <div class="param-label" id="paramMaterial">材质</div>
+                        <div class="param-value">锌合金、玻璃</div>
+                    </div>
+                    <div class="param-item">
+                        <div class="param-label" id="paramCraft">工艺</div>
+                        <div class="param-value">浮雕+彩印</div>
+                    </div>
+                    <div class="param-item">
+                        <div class="param-label" id="paramSize">规格</div>
+                        <div class="param-value">70*70mm</div>
+                    </div>
+                    <div class="param-item">
+                        <div class="param-label" id="paramConfig">配置</div>
+                        <div class="param-value">单个</div>
+                    </div>
+                    <div class="param-item">
+                        <div class="param-label" id="paramProducer">出品</div>
+                        <div class="param-value">洛阳博物馆</div>
+                    </div>
+                </div>
+                <!-- 规范标价：加入购物车区域 -->
+                <div class="buy-action">
+                    <div class="action-price" id="actionPrice">
+                        <span class="currency-symbol">¥</span>47.00
+                    </div>
+                    <button class="cart-btn" id="cartBtn">加入购物车</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 韵板块 -->
+    <div class="section" id="charm">
+        <h2 class="section-title" id="charmTitle">韵</h2>
+        <div class="scroll-container">
+            <button class="scroll-btn btn-left" id="leftBtn">&lt;</button>
+            <button class="scroll-btn btn-right" id="rightBtn">&gt;</button>
+            <div id="scrollCards">
+                <div class="scroll-card">
+                    <img src="tang-style.jpg" alt="唐风色彩">
+                    <div class="card-label">唐风色彩</div>
+                </div>
+                <div class="scroll-card">
+                    <img src="floral-pattern.jpg" alt="宝相花纹">
+                    <div class="card-label">宝相花纹</div>
+                </div>
+                <div class="scroll-card">
+                    <img src="craftsmanship.jpg" alt="匠心传承">
+                    <div class="card-label">匠心传承</div>
+                </div>
+                <div class="scroll-card">
+                    <img src="ancient-craft.jpg" alt="古法今用">
+                    <div class="card-label">古法今用</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 本板块 -->
+    <div class="section" id="root">
+        <h2 class="section-title" id="rootTitle">本</h2>
+        <div class="origin-container">
+            <div class="origin-img-box">
+                <img src="tang-mirror.jpg" alt="唐代铜镜原型" class="origin-img">
+            </div>
+            <div class="origin-content" id="rootContent">朱颜镜的设计原型，源自洛阳博物馆珍贵馆藏——唐代八出葵花形铜镜。洛阳，十三朝古都，见证了盛唐的繁华与荣耀。这面铜镜的镜背以绳索纹巧妙划分内外区，通体装饰着翩翩飞蝶、绽放花卉，以及口衔绶带的瑞兽鸾凤，辅以璀璨的金银丝片装饰，尽显大唐时代的雍容华贵与极致浪漫。我们将千年前的精湛工艺与现代审美巧妙融合，为您重现大唐气象。</div>
+        </div>
+    </div>
+
+    <!-- 【修改】脉板块·时间轴样式 -->
+    <div class="section" id="vein">
+        <h2 class="section-title" id="veinTitle">脉</h2>
+        <div class="vein-timeline">
+            <!-- 时间轴项1：左 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-subtitle" id="veinSub1">Tang Dynasty</div>
+                    <div class="timeline-title" id="veinTitle1">盛唐气象 · 镜中繁花</div>
+                    <div class="timeline-desc" id="veinDesc1">唐代铜镜不仅是日常用品，更是艺术珍品。宝相花纹的流行，体现了丝绸之路带来的多元文化融合。</div>                </div>
+            </div>
+            <!-- 时间轴项2：右 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-subtitle" id="veinSub2">Luoyang History</div>
+                    <div class="timeline-title" id="veinTitle2">神都洛阳 · 匠心传承</div>
+                    <div class="timeline-desc" id="veinDesc2">洛阳作为十三朝古都，出土了大量精美的唐代铜镜。这些器物见证了神都女性“当窗理云鬓，对镜贴花黄”的优雅生活。</div>
+                </div>
+            </div>
+            <!-- 时间轴项3：左 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-subtitle" id="veinSub3">Modern Revival</div>
+                    <div class="timeline-title" id="veinTitle3">今夕朱颜 · 文创焕新</div>
+                    <div class="timeline-desc" id="veinDesc3">洛阳博物馆通过现代设计语言，让沉睡千年的文物走进当代生活，让每一位使用者都能感受到跨越时空的东方美学。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 珍板块 -->
+    <div class="section" id="treasure">
+        <h2 class="section-title" id="treasureTitle">珍</h2>
+        <div class="treasure-container">
+            <div class="treasure-card">
+                <div class="card-en">OFFICIAL</div>
+                <div class="card-title">官方正品</div>
+                <div class="card-desc">洛阳博物馆官方授权出品，原版复刻，品质严格把控</div>
+            </div>
+            <div class="treasure-card">
+                <div class="card-en">CRAFT</div>
+                <div class="card-title">工艺精湛</div>
+                <div class="card-desc">传承唐代浮雕技艺，多道手工打磨，质感温润如玉</div>
+            </div>
+            <div class="treasure-card">
+                <div class="card-en">ART</div>
+                <div class="card-title">美学典藏</div>
+                <div class="card-desc">融合大唐风韵与现代审美，兼具实用与收藏价值</div>
+            </div>
+            <div class="treasure-card">
+                <div class="card-en">GIFT</div>
+                <div class="card-title">礼赠佳品</div>
+                <div class="card-desc">国风文创礼盒包装，送礼自用皆彰显东方雅致</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部板块 -->
+    <div class="footer-section">
+        <div class="buy-section">
+            <h3 class="buy-title" id="buyTitle">即刻拥有朱颜镜</h3>
+            <p class="buy-subtitle" id="buySubtitle">把大唐风华带回家</p>
+            <div class="buy-card">
+                <img src="zhuyan-jing.jpg" alt="朱颜镜" class="buy-img">
+                <div class="buy-info">
+                    <div class="buy-name" id="buyName">洛阳博物馆 · 朱颜镜</div>
+                    <!-- 规范标价：底部购买区域 -->
+                    <div class="buy-price" id="buyPrice">
+                        <span class="currency-symbol">¥</span>47.00
+                    </div>
+                </div>
+                <button class="buy-btn" id="buyBtn">立即购买</button>
+            </div>
+        </div>
+
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4 class="footer-title" id="footerAbout">关于我们</h4>
+                <p class="footer-desc" id="aboutDesc">洛阳博物馆<br>传承千年文脉<br>弘扬东方美学</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title" id="footerService">服务支持</h4>
+                <p class="footer-desc" id="serviceDesc">正品保障<br>售后咨询<br>版权声明</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title" id="footerContact">联系我们</h4>
+                <p class="footer-desc" id="contactDesc">客服热线<br>商务合作<br>地址：洛阳市洛龙区</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 韵板块·居中放大立体感轮播
+        const scrollContainer = document.getElementById('scrollCards');
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+        const scrollCards = document.querySelectorAll('.scroll-card');
+
+        // 初始化：默认第一张激活
+        scrollCards[0].classList.add('active');
+
+        // 更新选中卡片（居中检测）
+        function updateActiveCard() {
+            const containerWidth = scrollContainer.clientWidth;
+            const scrollLeft = scrollContainer.scrollLeft;
+            const centerPos = scrollLeft + containerWidth / 2;
+
+            scrollCards.forEach(card => {
+                const cardLeft = card.offsetLeft;
+                const cardWidth = card.offsetWidth;
+                const cardCenter = cardLeft + cardWidth / 2;
+                // 判断是否居中（误差范围内）
+                if (Math.abs(cardCenter - centerPos) < cardWidth / 2) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        // 滚动时更新选中状态
+        scrollContainer.addEventListener('scroll', updateActiveCard);
+
+        // 左按钮：切换到上一张
+        leftBtn.addEventListener('click', () => {
+            const activeCard = document.querySelector('.scroll-card.active');
+            const prevCard = activeCard.previousElementSibling || scrollCards[scrollCards.length - 1];
+            prevCard.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+            setTimeout(updateActiveCard, 100);
+        });
+
+        // 右按钮：切换到下一张
+        rightBtn.addEventListener('click', () => {
+            const activeCard = document.querySelector('.scroll-card.active');
+            const nextCard = activeCard.nextElementSibling || scrollCards[0];
+            nextCard.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+            setTimeout(updateActiveCard, 100);
+        });
+
+        // 页面加载完成后初始化居中
+        window.addEventListener('load', () => {
+            scrollContainer.scrollLeft = 0;
+            updateActiveCard();
+        });
+
+        // 2. 中英文切换 + 规范汇率换算
+        const langBtn = document.getElementById('langBtn');
+        let currentLang = 'zh'; // 默认中文
+        const RMB_PRICE = 47; // 人民币原价
+        const EXCHANGE_RATE = 7; // 汇率：1美元 = 7人民币
+        const USD_PRICE = (RMB_PRICE / EXCHANGE_RATE).toFixed(2); // 精准保留两位小数
+
+        // 双语数据配置（规范价格格式）
+        const i18n = {
+            zh: {
+                langBtn: "中文",
+                logoCh: "洛阳博物馆",
+                nav: {thing:"物", charm:"韵", root:"本", vein:"脉", treasure:"珍"},
+                hero: {
+                    series:"洛阳博物馆 · 文创系列",
+                    title:"朱颜镜",
+                    desc:"复刻大唐铜镜风华，藏尽洛阳千年韵致，一方朱颜，照见东方美学。",
+                    btn:"探索详情"
+                },
+                section: {thing:"物", charm:"韵", root:"本", vein:"脉", treasure:"珍"},
+                params: {name:"品名", material:"材质", craft:"工艺", size:"规格", config:"配置", producer:"出品"},
+                thingDesc:"朱颜镜采用高强度合金底座，经多道手工抛光工艺，呈现如玉温润质感。镜面采用高透光防雾玻璃，真实还原肌肤自然色泽，兼具实用与收藏价值。",
+                cartBtn:"加入购物车",
+                // 中文规范价格：币种符号+两位小数
+                price:`<span class="currency-symbol">¥</span>${RMB_PRICE}.00`,
+                // 本板块文字
+                rootContent:"朱颜镜的设计原型，源自洛阳博物馆珍贵馆藏——唐代八出葵花形铜镜。洛阳，十三朝古都，见证了盛唐的繁华与荣耀。这面铜镜的镜背以绳索纹巧妙划分内外区，通体装饰着翩翩飞蝶、绽放花卉，以及口衔绶带的瑞兽鸾凤，辅以璀璨的金银丝片装饰，尽显大唐时代的雍容华贵与极致浪漫。我们将千年前的精湛工艺与现代审美巧妙融合，为您重现大唐气象。",
+                // 脉板块时间轴中文
+                vein: {
+                    sub1: "Tang Dynasty",
+                    title1: "盛唐气象 · 镜中繁花",
+                    desc1: "唐代铜镜不仅是日常用品，更是艺术珍品。宝相花纹的流行，体现了丝绸之路带来的多元文化融合。",
+                    sub2: "Luoyang History",
+                    title2: "神都洛阳 · 匠心传承",
+                    desc2: "洛阳作为十三朝古都，出土了大量精美的唐代铜镜。这些器物见证了神都女性“当窗理云鬓，对镜贴花黄”的优雅生活。",
+                    sub3: "Modern Revival",
+                    title3: "今夕朱颜 · 文创焕新",
+                    desc3: "洛阳博物馆通过现代设计语言，让沉睡千年的文物走进当代生活，让每一位使用者都能感受到跨越时空的东方美学。"
+                },
+                buy: {
+                    title:"即刻拥有朱颜镜",
+                    subtitle:"把大唐风华带回家",
+                    name:"洛阳博物馆 · 朱颜镜",
+                    btn:"立即购买"
+                },
+                footer: {
+                    about:"关于我们", service:"服务支持", contact:"联系我们",
+                    aboutDesc:"洛阳博物馆<br>传承千年文脉<br>弘扬东方美学",
+                    serviceDesc:"正品保障<br>售后咨询<br>版权声明",
+                    contactDesc:"客服热线<br>商务合作<br>地址：洛阳市洛龙区"
+                }
+            },
+            en: {
+                langBtn: "English",
+                logoCh: "Luoyang Museum",
+                nav: {thing:"Item", charm:"Charm", root:"Origin", vein:"Vein", treasure:"Treasure"},
+                hero: {
+                    series:"Luoyang Museum · Cultural Series",
+                    title:"Zhu Yan Mirror",
+                    desc:"Replica of Tang Dynasty bronze mirror charm, containing thousands of years of Luoyang's charm. A mirror of beauty, reflecting Oriental aesthetics.",
+                    btn:"Explore More"
+                },
+                section: {thing:"Item", charm:"Charm", root:"Origin", vein:"Vein", treasure:"Treasure"},
+                params: {name:"Name", material:"Material", craft:"Craft", size:"Size", config:"Config", producer:"Producer"},
+                thingDesc:"Zhu Yan Mirror adopts high-strength alloy base, polished by multiple handcrafts, showing a warm jade-like texture. The mirror surface uses high-transmission anti-fog glass, truly restoring the natural skin color, with both practical and collection value.",
+                cartBtn:"Add to Cart",
+                // 英文规范价格：币种符号+两位小数
+                price:`<span class="currency-symbol">$</span>${USD_PRICE}`,
+                // 本板块英文
+                rootContent:"The design prototype of Zhu Yan Mirror is derived from the precious collection of Luoyang Museum - the Tang Dynasty eight-lobed sunflower-shaped bronze mirror. Luoyang, the ancient capital of thirteen dynasties, witnessed the prosperity and glory of the prosperous Tang Dynasty. The back of this bronze mirror is cleverly divided into inner and outer areas with rope patterns, decorated with flying butterflies, blooming flowers, and auspicious animals and phoenixes holding ribbons in their mouths, supplemented by bright gold and silver filigree decorations, showing the elegance, luxury and extreme romance of the Tang Dynasty. We skillfully integrate the exquisite craftsmanship of thousands of years ago with modern aesthetics to reproduce the majesty of the Tang Dynasty for you.",
+                // 脉板块时间轴英文
+                vein: {
+                    sub1: "Tang Dynasty",
+                    title1: "Prosperous Tang · Flowers in Mirror",
+                    desc1: "Tang Dynasty bronze mirrors were not only daily necessities, but also artistic treasures. The popularity of treasure flower patterns reflected the multicultural integration brought by the Silk Road.",
+                    sub2: "Luoyang History",
+                    title2: "Divine Capital Luoyang · Craftsmanship Inheritance",
+                    desc2: "As an ancient capital of thirteen dynasties, Luoyang unearthed a large number of exquisite Tang Dynasty bronze mirrors. These artifacts witnessed the elegant life of women in the divine capital, who 'combed their cloud hair by the window and pasted flowers on their faces in front of the mirror'.",
+                    sub3: "Modern Revival",
+                    title3: "Zhu Yan Today · Cultural Creation Renewal",
+                    desc3: "Luoyang Museum uses modern design language to bring the thousand-year-old cultural relics into contemporary life, allowing every user to feel the Oriental aesthetics that transcends time and space."
+                },
+                buy: {
+                    title:"Get Zhu Yan Mirror Now",
+                    subtitle:"Bring Tang Dynasty Charm Home",
+                    name:"Luoyang Museum · Zhu Yan Mirror",
+                    btn:"Buy Now"
+                },
+                footer: {
+                    about:"About Us", service:"Service Support", contact:"Contact Us",
+                    aboutDesc:"Luoyang Museum<br>Inheriting Millennium Culture<br>Promoting Oriental Aesthetics",
+                    serviceDesc:"Genuine Guarantee<br>After-sales Consultation<br>Copyright Statement",
+                    contactDesc:"Service Hotline<br>Business Cooperation<br>Address: Luolong District, Luoyang City"
+                }
+            }
+        };
+
+        // 切换语言函数
+        function changeLang() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            const text = i18n[currentLang];
+            
+            // 更新所有文本
+            langBtn.textContent = text.langBtn;
+            document.getElementById('logoCh').textContent = text.logoCh;
+            document.getElementById('navThing').textContent = text.nav.thing;
+            document.getElementById('navCharm').textContent = text.nav.charm;
+            document.getElementById('navRoot').textContent = text.nav.root;
+            document.getElementById('navVein').textContent = text.nav.vein;
+            document.getElementById('navTreasure').textContent = text.nav.treasure;
+            
+            document.getElementById('heroSeries').textContent = text.hero.series;
+            document.getElementById('heroTitle').textContent = text.hero.title;
+            document.getElementById('heroDesc').textContent = text.hero.desc;
+            document.getElementById('exploreBtn').textContent = text.hero.btn;
+            
+            document.getElementById('thingTitle').textContent = text.section.thing;
+            document.getElementById('charmTitle').textContent = text.section.charm;
+            document.getElementById('rootTitle').textContent = text.section.root;
+            document.getElementById('veinTitle').textContent = text.section.vein;
+            document.getElementById('treasureTitle').textContent = text.section.treasure;
+            
+            document.getElementById('paramName').textContent = text.params.name;
+            document.getElementById('paramMaterial').textContent = text.params.material;
+            document.getElementById('paramCraft').textContent = text.params.craft;
+            document.getElementById('paramSize').textContent = text.params.size;
+            document.getElementById('paramConfig').textContent = text.params.config;
+            document.getElementById('paramProducer').textContent = text.params.producer;
+            
+            document.getElementById('thingDesc').textContent = text.thingDesc;
+            document.getElementById('cartBtn').textContent = text.cartBtn;
+            // 规范价格渲染（支持HTML币种符号）
+            document.getElementById('actionPrice').innerHTML = text.price;
+            
+            document.getElementById('rootContent').textContent = text.rootContent;
+            // 更新脉板块时间轴文本
+            document.getElementById('veinSub1').textContent = text.vein.sub1;
+            document.getElementById('veinTitle1').textContent = text.vein.title1;
+            document.getElementById('veinDesc1').textContent = text.vein.desc1;
+            document.getElementById('veinSub2').textContent = text.vein.sub2;
+            document.getElementById('veinTitle2').textContent = text.vein.title2;
+            document.getElementById('veinDesc2').textContent = text.vein.desc2;
+            document.getElementById('veinSub3').textContent = text.vein.sub3;
+            document.getElementById('veinTitle3').textContent = text.vein.title3;
+            document.getElementById('veinDesc3').textContent = text.vein.desc3;
+            
+            document.getElementById('buyTitle').textContent = text.buy.title;
+            document.getElementById('buySubtitle').textContent = text.buy.subtitle;
+            document.getElementById('buyName').textContent = text.buy.name;
+            // 规范价格渲染（支持HTML币种符号）
+            document.getElementById('buyPrice').innerHTML = text.price;
+            document.getElementById('buyBtn').textContent = text.buy.btn;
+            
+            document.getElementById('footerAbout').textContent = text.footer.about;
+            document.getElementById('footerService').textContent = text.footer.service;
+            document.getElementById('footerContact').textContent = text.footer.contact;
+            document.getElementById('aboutDesc').innerHTML = text.footer.aboutDesc;
+            document.getElementById('serviceDesc').innerHTML = text.footer.serviceDesc;
+            document.getElementById('contactDesc').innerHTML = text.footer.contactDesc;
+        }
+
+        // 绑定语言切换点击事件
+        langBtn.addEventListener('click', changeLang);
+
+        // 3. 加入购物车提示功能
+        document.getElementById('cartBtn').addEventListener('click', () => {
+            alert(currentLang === 'zh' ? '已加入购物车！' : 'Added to cart!');
+        });
+    </script>
+</body>
+</html>
